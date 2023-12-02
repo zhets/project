@@ -295,6 +295,7 @@ MYIP=$(wget -qO- ipinfo.io/ip)
 url_izin="https://raw.githubusercontent.com/zhets/izinsc/main/ip"
 username=$(curl $url_izin | grep $MYIP | awk '{print $2}')
 valid=$(curl $url_izin | grep $MYIP | awk '{print $3}')
+exp="${valid}"
 clear
 # CERTIFICATE STATUS
 d1=$(date -d "$valid" +%s)
@@ -308,7 +309,6 @@ datediff() {
     echo -e "$COLOR1 $NC Expiry In   : $(( (d1 - d2) / 86400 )) Days"
 }
 mai="datediff "$Exp" "$DATE""
-
 # Status Expired Active
 Info="(${green}Active${NC})"
 Error="(${RED}Expired${NC})"
@@ -331,13 +331,13 @@ TEXT="
 <b>NOTIFICATION INSTALL</b>
 <b>SCRIPT ZheeVPN</b>
 <code>────────────────────</code>
-<code>User     :</code><code>$username</code>
-<code>Domain   :</code><code>$domain</code>
-<code>IPVPS    :</code><code>$MYIP</code>
-<code>ISP      :</code><code>$(cat /root/.isp)</code>
-<code>DATE     :</code><code>$DATEVPS</code>
-<code>Time     :</code><code>$TIMEZONE</code>
-<code>Expired  :</code><code>$exp</code>
+<code>User    : </code><code>$username</code>
+<code>Domain  : </code><code>$domain</code>
+<code>IPVPS   : </code><code>$MYIP</code>
+<code>ISP     : </code><code>$(cat /root/.isp)</code>
+<code>DATE    : </code><code>$DATEVPS</code>
+<code>Time    : </code><code>$TIMEZONE</code>
+<code>Expired : </code><code>$exp</code>
 <code>────────────────────</code>
 <i>Automatic Notifications From ZheeVpn BOT</i>
 "'&reply_markup={"inline_keyboard":[[{"text":" 『 ʙᴜʏ ꜱᴄʀɪᴘᴛ 』 ","url":"https://t.me/zheevpn"}]]}' 
@@ -370,7 +370,7 @@ print_install "Memasang SSL Pada Domain"
 }
 
 function make_folder_xray() {
-rm -rf /etc/vmess/.vmess.db
+    rm -rf /etc/vmess/.vmess.db
     rm -rf /etc/vless/.vless.db
     rm -rf /etc/trojan/.trojan.db
     rm -rf /etc/shadowsocks/.shadowsocks.db
@@ -394,6 +394,11 @@ rm -rf /etc/vmess/.vmess.db
     mkdir -p /etc/limit/vmess
     mkdir -p /etc/limit/vless
     mkdir -p /etc/limit/trojan
+    mkdir -p /etc/user
+    mkdir -p /etc/user/ssh
+    mkdir -p /etc/user/vmess
+    mkdir -p /etc/user/vless
+    mkdir -p /etc/user/trojan
     chmod +x /var/log/xray
     touch /etc/xray/domain
     touch /var/log/xray/access.log
@@ -425,9 +430,7 @@ bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release
  
     # // Ambil Config Server
     wget -O /etc/xray/config.json "${REPO}xray/config.json" >/dev/null 2>&1
-    #wget -O /usr/local/bin/xray "${REPO}xray/xray.linux.64bit" >/dev/null 2>&1
     wget -O /etc/systemd/system/runn.service "${REPO}xray/runn.service" >/dev/null 2>&1
-    #chmod +x /usr/local/bin/xray
     domain=$(cat /etc/xray/domain)
     IPVS=$(cat /etc/xray/ipvps)
     print_success "Core Xray 1.8.1 Latest Version"
@@ -477,7 +480,7 @@ function udp_custom(){
 clear
 print_install "Memasang Service Udp Custom"
 sleep 2
-wget -qO- udp.sh "${REPO}ssh/udp.sh" && chmod +x udp.sh && ./udp.sh
+wget ${REPO}ssh/udp.sh && chmod +x udp.sh && ./udp.sh
 print_success "Udp Custom"
 }
 
