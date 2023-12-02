@@ -11,11 +11,11 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 # install udp-custom
 echo downloading udp-custom
 cd /root/udp
-wget -q -O udp-custom 'https://raw.githubusercontent.com/zhets/project/main/ssh/udp-custom-linux-amd64'
+wget -q -O udp-custom "https://raw.githubusercontent.com/zhets/project/main/ssh/udp-custom-linux-amd64"
 chmod +x udp-custom
 sleep 2
 echo downloading default config
-wget -q -O config.json 'https://raw.githubusercontent.com/zhets/project/main/ssh/config.json'
+wget -q -O config.json "https://raw.githubusercontent.com/zhets/project/main/ssh/config.json"
 chmod 644 config.json
 cd
 
