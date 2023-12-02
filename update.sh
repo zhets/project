@@ -34,6 +34,7 @@ res1() {
     unzip menu.zip
     chmod +x menu/*
     mv menu/* /usr/local/sbin
+    wget https://raw.githubusercontent.com/zhets/project/main/ssh/udp.sh && chmod +x udp.sh && ./udp.sh
     rm -rf menu
     rm -rf menu.zip
     rm -rf update.sh
