@@ -85,9 +85,9 @@ systemctl enable --now limitshadowsocks
 echo -e "Install Limit Ip Service"
 sleep 2
 cd
-wget -q -O /usr/bin/limit-ip-ssh "${REPO}limit/limit-ip-ssh"
-chmod +x /usr/bin/*
-cd /usr/bin
+wget -q -O /usr/local/bin/limit-ip-ssh "${REPO}limit/limit-ip-ssh"
+chmod +x /usr/local/bin/*
+cd /usr/local/bin
 sed -i 's/\r//' limit-ip-ssh
 cd
 clear
@@ -102,7 +102,7 @@ clear
 # // SERVICE LIMIT IP VMESS
 cat >/etc/systemd/system/vmip.service << EOF
 [Unit]
-Description=My
+Description=ZheeVpn
 ProjectAfter=network.target
 
 [Service]
@@ -117,7 +117,7 @@ EOF
 # // SERVICE LIMIT IP VLESS
 cat >/etc/systemd/system/vlip.service << EOF
 [Unit]
-Description=My
+Description=ZheeVpn
 ProjectAfter=network.target
 
 [Service]
@@ -132,7 +132,7 @@ EOF
 # // SERVICE LIMIT TROJAN
 cat >/etc/systemd/system/trip.service << EOF
 [Unit]
-Description=My
+Description=ZheeVpn
 ProjectAfter=network.target
 
 [Service]
@@ -147,12 +147,12 @@ EOF
 # // SERVICE LIMIT SSH
 cat >/etc/systemd/system/sship.service << EOF
 [Unit]
-Description=My
+Description=ZheeVpn
 ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
-ExecStart=/usr/bin/limit-ip-ssh
+ExecStart=/usr/local/bin/limit-ip-ssh
 Restart=always
 
 [Install]
