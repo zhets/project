@@ -74,6 +74,26 @@
          }
        },
        {
+     "listen": "127.0.0.1",
+     "port": "100010",
+     "protocol": "vmess",
+      "settings": {
+            "clients": [
+               {
+                 "id": "1d1c1d94-6987-4658-a4dc-8821a30fe7e0",
+                 "alterId": 0
+#vmess
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/worryfree"
+           }
+         }
+       },
+       {
       "listen": "127.0.0.1",
       "port": "10003",
       "protocol": "trojan",
