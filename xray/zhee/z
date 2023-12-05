@@ -1,11 +1,1 @@
 #!/bin/bash
-clear
-REPO="https://raw.githubusercontent.com/zhets/project/main/"
-wget -O /etc/xray/config.json "${REPO}xray/config.json" >/dev/null 2>&1
-wget -O /etc/nginx/conf.d/xray.conf "${REPO}xray/xray.conf" >/dev/null 2>&1
-sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/xray.conf
-systemctl daemon-reload
-systemctl start nginx xray
-systemctl enable --now nginx xray
-systemctl restart nginx xray
-systemctl status nginx xray
