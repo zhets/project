@@ -25,15 +25,15 @@ clear;clear;clear
 
   # // Banner
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
-echo -e "  Welcome To ZheeVPN Project Script Installer ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
+echo -e "  Welcome To FV STORE Project Script Installer ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
 echo -e "     This Will Quick Setup VPN Server On Your Server"
-echo -e "         Auther : ${green}ZheeVPN ${NC} ${green}Fvstore ${NC}"
-echo -e "       Â© Recode By ZheeVPN Project ${YELLOW}(${NC} 2023 ${YELLOW})${NC}"
+echo -e "         Auther : ${green}FV STORE ${NC} ${green}Fvstore ${NC}"
+echo -e "       Â© Recode By FV STORE Project ${YELLOW}(${NC} 2023 ${YELLOW})${NC}"
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo ""
 sleep 5
 url_izin="https://raw.githubusercontent.com/zhets/izinsc/main/ip"
-ipsaya=$(wget -qO- ipinfo.io/ip)
+ipsaya=$(curl -sS ipv4.icanhazip.com)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
 checking_sc() {
@@ -49,7 +49,7 @@ checking_sc() {
     echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
     echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
     echo -e "             \033[0;33mContact Admin :${NC}"
-    echo -e "      \033[0;36mWhatsapp${NC} wa.me/6285935195701"
+    echo -e "      \033[0;36mWhatsapp${NC} wa.me/6283160098834"
     echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
     exit
   fi
@@ -291,7 +291,7 @@ clear
 clear
 #GANTI PASSWORD DEFAULT
 function password_default() {
-MYIP=$(wget -qO- ipinfo.io/ip)
+MYIP=$(curl -sS ipv4.icanhazip.com)
 url_izin="https://raw.githubusercontent.com/zhets/izinsc/main/ip"
 username=$(curl $url_izin | grep $MYIP | awk '{print $2}')
 valid=$(curl $url_izin | grep $MYIP | awk '{print $3}')
