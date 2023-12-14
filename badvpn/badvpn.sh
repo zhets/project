@@ -1,12 +1,14 @@
 #!/bin/bash
 REPO="https://raw.githubusercontent.com/zhets/project/main/"
-mkdir -p /usr/local/zhee/
-wget -q -O /usr/local/zhee/udp-mini "${REPO}badvpn/udp-mini"
-chmod +x /usr/local/zhee/udp-mini
+mkdir -p /usr/local/fvstore/
+wget -q -O /usr/local/fvstore/udp-mini "${REPO}badvpn/udp-mini"
+chmod +x /usr/local/fvstore/udp-mini
 wget -q -O /etc/systemd/system/udp-mini-1.service "${REPO}badvpn/udp-mini-1.service"
 wget -q -O /etc/systemd/system/udp-mini-2.service "${REPO}badvpn/udp-mini-2.service"
 wget -q -O /etc/systemd/system/udp-mini-3.service "${REPO}badvpn/udp-mini-3.service"
 wget -q -O /etc/systemd/system/udp-mini-4.service "${REPO}badvpn/udp-mini-4.service"
+wget -q -O /etc/systemd/system/udp-mini-5.service "${REPO}badvpn/udp-mini-5.service"
+
 systemctl disable udp-mini-1
 systemctl stop udp-mini-1
 systemctl enable udp-mini-1
@@ -26,3 +28,8 @@ systemctl disable udp-mini-4
 systemctl stop udp-mini-4
 systemctl enable udp-mini-4
 systemctl start udp-mini-4
+
+systemctl disable udp-mini-5
+systemctl stop udp-mini-5
+systemctl enable udp-mini-5
+systemctl start udp-mini-5
