@@ -16,7 +16,7 @@ red='\e[1;31m'
 green='\e[0;32m'
 # ===================
   # // Exporint IP AddressInformation
-export IP=$( curl -sS ipinfo.io/ip )
+export IP=$(curl -sS ipv4.icanhazip.com)
 
 # // Clear Data
 clear
@@ -329,7 +329,7 @@ TIMEZONE=$(printf '%(%H:%M:%S)T')
 TEXT="
 <code>────────────────────</code>
 <b>NOTIFICATION INSTALL</b>
-<b>SCRIPT ZheeVPN</b>
+<b>SCRIPT FvSTORE</b>
 <code>────────────────────</code>
 <code>User    : </code><code>$username</code>
 <code>Domain  : </code><code>$domain</code>
@@ -339,8 +339,8 @@ TEXT="
 <code>Time    : </code><code>$TIMEZONE</code>
 <code>Expired : </code><code>$exp</code>
 <code>────────────────────</code>
-<i>Automatic Notifications From ZheeVpn BOT</i>
-"'&reply_markup={"inline_keyboard":[[{"text":" 『 ʙᴜʏ ꜱᴄʀɪᴘᴛ 』 ","url":"https://t.me/zheevpn"}]]}' 
+<i>Automatic Notifications From Fvstore BOT</i>
+"'&reply_markup={"inline_keyboard":[[{"text":" 『 ʙᴜʏ ꜱᴄʀɪᴘᴛ 』 ","url":"https://t.me/fv_stores"}]]}' 
 
     curl -s --max-time 10 -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 
@@ -559,27 +559,28 @@ print_success "Password SSH"
 
 function udp_mini(){
 clear
-print_install "Memasang Service Limit"
+print_install "Memasang Service Limit & BadVPN"
+
 # // Instaling Service Limit & Quota
-wget -q -O zhee-user-limit.sh "${REPO}limit/zhee-user-limit.sh"
-chmod +x zhee-user-limit.sh && ./zhee-user-limit.sh
-rm -rf zhee-user-limit.sh
+wget -q -O fv-tunnel-user-limit.sh "${REPO}limit/fv-tunnel-user-limit.sh"
+chmod +x fv-tunnel-user-limit.sh && ./fv-tunnel-user-limit.sh
 
 # // Installing UDP Mini
 wget -q -O badvpn.sh "${REPO}badvpn/badvpn.sh"
 chmod +x badvpn.sh && ./badvpn.sh
 rm -rf badvpn.sh
-print_success "Limit Service"
+print_success "Service Limit & BadVPN"
 }
 
 function ssh_slow(){
 clear
 # // Installing UDP Mini
 print_install "Memasang modul SlowDNS Server"
-    wget -q -O /tmp/nameserver "${REPO}slowdns/nameserver" >/dev/null 2>&1
-    chmod +x /tmp/nameserver
-    bash /tmp/nameserver | tee /root/install.log
- print_success "SlowDNS"
+wget -q -O /tmp/nameserver "${REPO}slowdns/nameserver" >/dev/null 2>&1
+chmod +x /tmp/nameserver
+bash /tmp/nameserver
+rm -fr nameserver
+print_success "SlowDNS"
 }
 
 clear
@@ -603,7 +604,6 @@ apt-get install dropbear -y > /dev/null 2>&1
 wget -q -O /etc/default/dropbear "${REPO}ssh/dropbear.conf"
 chmod +x /etc/default/dropbear
 /etc/init.d/dropbear restart
-/etc/init.d/dropbear status
 print_success "Dropbear"
 }
 
@@ -679,13 +679,13 @@ print_success "Backup Server"
 clear
 function ins_swab(){
 clear
-print_install "Memasang Swap 1 G"
+print_install "Memasang Swap 1 GB"
 gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
     gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
     curl -sL "$gotop_link" -o /tmp/gotop.deb
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
-        # > Buat swap sebesar 1G
+        # > Buat swap sebesar 1GB
     dd if=/dev/zero of=/swapfile bs=1024 count=1048576
     mkswap /swapfile
     chown root:root /swapfile
@@ -699,7 +699,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     chronyc tracking -v
     
     wget ${REPO}bbr.sh &&  chmod +x bbr.sh && ./bbr.sh
-print_success "Swap 1 G"
+print_success "Swap 1 GB"
 }
 
 function ins_Fail2ban(){
@@ -720,11 +720,11 @@ fi
 
 clear
 # banner
-echo "Banner /etc/zhee.txt" >>/etc/ssh/sshd_config
-sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/zhee.txt"@g' /etc/default/dropbear
+echo "Banner /etc/fvstore.txt" >>/etc/ssh/sshd_config
+sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/fvstore.txt"@g' /etc/default/dropbear
 
 # Ganti Banner
-wget -O /etc/zhee.txt "${REPO}ssh/issue.net"
+wget -O /etc/fvstore.txt "${REPO}ssh/issue.net"
 print_success "Fail2ban"
 }
 
@@ -825,7 +825,7 @@ if [ "$BASH" ]; then
     fi
 fi
 mesg n || true
-zheesc
+fvstore
 EOF
 
 cat >/etc/cron.d/xp_all <<-END
@@ -834,7 +834,13 @@ cat >/etc/cron.d/xp_all <<-END
 		2 0 * * * root /usr/local/sbin/xp
 	END
     chmod 644 /root/.profile
-	
+
+cat >/etc/cron.d/lim-ssh-ip <<-END
+		SHELL=/bin/sh
+		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+		1 * * * * root /usr/local/sbin/limit-ip-ssh
+	END
+ 
     cat >/etc/cron.d/daily_reboot <<-END
 		SHELL=/bin/sh
 		PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
