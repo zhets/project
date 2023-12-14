@@ -16,7 +16,7 @@ chmod +x /etc/xray/limit.shadowsocks
 cat >/etc/systemd/system/limitvmess.service << EOF
 [Unit]
 Description=Limit Usage Xray Service
-Documentation=ZheeVpn
+Documentation=https://github.com/fv-store
 After=syslog.target network-online.target
 
 [Service]
@@ -32,7 +32,7 @@ EOF
 cat >/etc/systemd/system/limitvless.service << EOF
 [Unit]
 Description=Limit Usage Xray Service
-Documentation=ZheeVpn
+Documentation=https://github.com/fv-store
 After=syslog.target network-online.target
 
 [Service]
@@ -48,7 +48,7 @@ EOF
 cat >/etc/systemd/system/limittrojan.service << EOF
 [Unit]
 Description=Limit Usage Xray Service
-Documentation=ZheeVpn
+Documentation=https://github.com/fv-store
 After=syslog.target network-online.target
 
 [Service]
@@ -64,7 +64,7 @@ EOF
 cat >/etc/systemd/system/limitshadowsocks.service << EOF
 [Unit]
 Description=Limit Usage Xray Service
-Documentation=ZheeVpn
+Documentation=https://github.com/fv-store
 After=syslog.target network-online.target
 
 [Service]
@@ -102,7 +102,7 @@ clear
 # // SERVICE LIMIT IP VMESS
 cat >/etc/systemd/system/vmip.service << EOF
 [Unit]
-Description=ZheeVpn
+Description=https://github.com/fv-store
 ProjectAfter=network.target
 
 [Service]
@@ -117,7 +117,7 @@ EOF
 # // SERVICE LIMIT IP VLESS
 cat >/etc/systemd/system/vlip.service << EOF
 [Unit]
-Description=ZheeVpn
+Description=https://github.com/fv-store
 ProjectAfter=network.target
 
 [Service]
@@ -132,7 +132,7 @@ EOF
 # // SERVICE LIMIT TROJAN
 cat >/etc/systemd/system/trip.service << EOF
 [Unit]
-Description=ZheeVpn
+Description=https://github.com/fv-store
 ProjectAfter=network.target
 
 [Service]
@@ -147,12 +147,12 @@ EOF
 # // SERVICE LIMIT SSH
 cat >/etc/systemd/system/sship.service << EOF
 [Unit]
-Description=ZheeVpn
+Description=https://github.com/fv-store
 ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
-ExecStart=/usr/local/bin/limit-ip-ssh
+ExecStart=/usr/local/sbin/limit-ip-ssh
 Restart=always
 
 [Install]
@@ -169,4 +169,4 @@ systemctl enable vlip
 systemctl restart trip
 systemctl enable trip
 
-rm -rf /root/zhee-user-limit.sh
+rm -rf /root/fv-tunnel-user-limit.sh
