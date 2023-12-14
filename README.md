@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&center=true&vCenter=true&lines=SCRIPT+ㅤ+TUNNEL+ +BY+ㅤ+FV+ +STORE" />
+<img src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&center=true&vCenter=true&lines=SCRIPT+ +BY+ㅤ+FV+ +STORE" />
 </p>
 
 ## `INSTALL SCRIPT`
