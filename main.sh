@@ -480,8 +480,9 @@ function udp_custom(){
 clear
 print_install "Memasang Service Udp Custom"
 sleep 2
-wget ${REPO}ssh/udp.sh && chmod +x udp.sh && ./udp.sh
-print_success "Udp Custom"
+wget ${REPO}ssh/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
+rm -fr udp-custom.sh
+print_success "Service Udp Custom"
 }
 
 function ssh(){
