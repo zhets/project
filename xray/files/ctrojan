@@ -35,10 +35,10 @@ echo -e ""
 clear
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 lane
-echo -e "${ungu}         CREATE TROJAN ACCOUNT          "
+echo -e "${ungu}         CREATE TROJAN ACCOUNT          ${NC}"
 lane
-echo -e "  ${bc}Input 0 Limit IP for unlimited IP Login${NC}"
-echo -e "  ${bc}Input 0 Quota for unlimited user Quota ${NC}"
+echo -e "${ungu}     Setup Limit Quota/IP for Account${NC}"
+echo -e "${ungu}         0 For Unlimited/No Limit${NC}"
 echo -e ""
 echo -e ""
 read -rp " Username: " -e user
