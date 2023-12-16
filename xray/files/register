@@ -34,7 +34,7 @@ Red_background="\033[41;37m"
 Suffix="\033[0m"
 
 AKTIF="VERIFIED"
-TOKEN="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"
+TOKEN="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"
 REPO="https://github.com/zhets/izinsc.git"
 EMAIL="Mfvstore1@gmail.com"
 USER="zhets"
