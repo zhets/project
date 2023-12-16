@@ -1,0 +1,186 @@
+#!/bin/bash
+ISP=$(cat /etc/xray/isp)
+CITY=$(cat /etc/xray/city)
+domain=$(cat /etc/xray/domain)
+
+ungu="\033[0;35m"
+bc="\033[5;36m"
+y="\033[0;33m"
+NC="\033[0m"
+
+function lane() {
+echo -e "${bc} ————————————————————————————————————————${NC}"
+}
+
+function Credit_Sc() {
+sleep 1
+echo -e ""
+lane 
+echo -e "${ungu}      Terimakasih sudah menggunakan-"
+echo -e "         Script Credit by Fvstore"
+lane
+echo -e ""
+exit 0
+}
+
+function LOGO() {
+clear
+echo -e ""
+lane
+echo -e "${ungu}            Fvstore Tunneling            "
+lane
+echo -e ""
+}
+
+clear
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+lane
+echo -e "${ungu}         CREATE TROJAN ACCOUNT          "
+lane
+echo -e "  ${bc}Input 0 Limit IP for unlimited IP Login${NC}"
+echo -e "  ${bc}Input 0 Quota for unlimited user Quota ${NC}"
+echo -e ""
+echo -e ""
+read -rp " Username: " -e user
+user_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+
+if [[ ${user_EXISTS} == '1' ]]; then
+clear
+lane
+echo -e "${ungu}         CREATE TROJAN ACCOUNT          ${NC}"
+lane
+echo ""
+echo "A client with the specified name was already created, please choose another name."
+echo ""
+lane
+read -n 1 -s -r -p "Press any key to back on menu"
+m-trojan
+fi
+done
+uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p " Expired (days): " masaaktif
+read -p " Limit Quota (GB): " Quota
+read -p " Limit User  (IP): " iplimit
+tgl=$(date -d "$masaaktif days" +"%d")
+bln=$(date -d "$masaaktif days" +"%b")
+thn=$(date -d "$masaaktif days" +"%Y")
+expe="$tgl $bln, $thn"
+tgl2=$(date +"%d")
+bln2=$(date +"%b")
+thn2=$(date +"%Y")
+tnggl="$tgl2 $bln2, $thn2"
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+sed -i '/#trojanws$/a\#! '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#trojangrpc$/a\#! '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+
+# // Link trojan account
+trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
+trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojanlink2="trojan://${uuid}@${domain}:80?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}"
+
+cat >/var/www/html/trojan-$user.txt <<-END
+———————————————————————————————————————————————————
+               Fvstore  Tunneling 
+———————————————————————————————————————————————————
+# // Format Trojan GO/WS
+
+- name: Trojan-$user-GO/WS
+  server: ${domain}
+  port: 443
+  type: trojan
+  password: ${uuid}
+  network: ws
+  sni: ${domain}
+  skip-cert-verify: true
+  udp: true
+  ws-opts:
+    path: /trojan-ws
+    headers:
+        Host: ${domain}
+
+# Format Trojan gRPC
+
+- name: Trojan-$user-gRPC
+  type: trojan
+  server: ${domain}
+  port: 443
+  password: ${uuid}
+  udp: true
+  sni: ${domain}
+  skip-cert-verify: true
+  network: grpc
+  grpc-opts:
+    grpc-service-name: trojan-grpc
+
+———————————————————————————————————————————————————
+Link Trojan Account
+———————————————————————————————————————————————————
+Link WS    : 
+${trojanlink}
+———————————————————————————————————————————————————
+Link GRPC  : 
+${trojanlink1}
+———————————————————————————————————————————————————
+
+END
+
+
+if [ ! -e /etc/trojan ]; then
+  mkdir -p /etc/trojan
+fi
+
+if [[ $iplimit -gt 0 ]]; then
+mkdir -p /etc/kyt/limit/trojan/ip
+echo -e "$iplimit" > /etc/kyt/limit/trojan/ip/$user
+else
+echo > /dev/null
+fi
+
+if [ -z ${Quota} ]; then
+  Quota="0"
+fi
+
+c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
+d=$((${c} * 1024 * 1024 * 1024))
+
+if [[ ${c} != "0" ]]; then
+  echo "${d}" >/etc/trojan/${user}
+fi
+DATADB=$(cat /etc/trojan/.trojan.db | grep "^###" | grep -w "${user}" | awk '{print $2}')
+if [[ "${DATADB}" != '' ]]; then
+  sed -i "/\b${user}\b/d" /etc/trojan/.trojan.db
+fi
+echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit}" >>/etc/trojan/.trojan.db
+systemctl reload xray
+systemctl reload nginx
+service cron restart
+systemctl restart xray
+
+LOGO
+echo -e ""
+echo -e "${ungu}             TROJAN ACCOUNT              ${NC}"
+lane
+echo -e " Username         : ${user}" 
+echo -e " Host/IP          : ${domain}"
+echo -e " User Quota       : ${Quota} GB"
+echo -e " User IP          : ${iplimit} IP"
+echo -e " Port TLS         : 443" 
+echo -e " port None TLS    : 80, 8880, 8080"
+echo -e " Key              : ${uuid}" 
+echo -e " Localtion        : $CITY"
+echo -e " ISP              : $ISP"
+echo -e " Path             : /trojan-ws" 
+echo -e " ServiceName      : trojan-grpc" 
+lane
+echo -e " Link WS          : ${trojanlink}" 
+lane
+echo -e " Link GRPC        : ${trojanlink1}" 
+lane
+echo -e " Format OpenClash : https://${domain}:81/trojan-$user.txt"
+lane
+echo -e " $y  Created On : $tnggl"
+echo -e " $y  Expired On : $expe" 
+lane
+Credit_Sc
