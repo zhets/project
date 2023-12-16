@@ -35,13 +35,13 @@ echo -e ""
 clear
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 lane
-echo -e "${ungu}         CREATE TROJAN ACCOUNT          ${NC}"
+echo -e "${ungu}          CREATE TROJAN ACCOUNT          ${NC}"
 lane
 echo -e "${ungu}     Setup Limit Quota/IP for Account${NC}"
-echo -e "${ungu}         0 For Unlimited/No Limit${NC}"
+echo -e "${ungu}     0 For Unlimited/No Limit${NC}"
 echo -e ""
 echo -e ""
-read -rp " Username: " -e user
+read -rp " Input Username : " -e user
 user_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 if [[ ${user_EXISTS} == '1' ]]; then
@@ -58,9 +58,9 @@ m-trojan
 fi
 done
 uuid=$(cat /proc/sys/kernel/random/uuid)
-read -p " Expired (days): " masaaktif
+read -p " Expired (days)  : " masaaktif
+read -p " Limit User (IP) : " iplimit
 read -p " Limit Quota (GB): " Quota
-read -p " Limit User  (IP): " iplimit
 tgl=$(date -d "$masaaktif days" +"%d")
 bln=$(date -d "$masaaktif days" +"%b")
 thn=$(date -d "$masaaktif days" +"%Y")
@@ -159,7 +159,6 @@ service cron restart
 systemctl restart xray
 
 LOGO
-echo -e ""
 echo -e "${ungu}             TROJAN ACCOUNT              ${NC}"
 lane
 echo -e " Username         : ${user}" 
