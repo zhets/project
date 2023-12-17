@@ -69,10 +69,8 @@ trojanlink2="trojan://${uuid}@${domain}:80?path=%2Ftrojan-ws&security=none&host=
 
 cat >/var/www/html/trojan-$user.txt <<-END
 ———————————————————————————————————————————————————
-               Fvstore  Tunneling 
+             Format Clash for Trojan TLS
 ———————————————————————————————————————————————————
-# // Format Trojan GO/WS
-
 - name: Trojan-$user-GO/WS
   server: ${domain}
   port: 443
@@ -87,7 +85,9 @@ cat >/var/www/html/trojan-$user.txt <<-END
     headers:
         Host: ${domain}
 
-# Format Trojan gRPC
+———————————————————————————————————————————————————
+             Format Clash for Trojan gRPC
+———————————————————————————————————————————————————
 
 - name: Trojan-$user-gRPC
   type: trojan
@@ -153,6 +153,7 @@ systemctl reload nginx
 service cron restart
 systemctl restart xray
 
+echo "killtrial trojan ${user}" | at now +${timer}m
 LOGO
 echo -e "${ungu}             TROJAN ACCOUNT              ${NC}"
 lane
@@ -176,5 +177,4 @@ echo -e " Format OpenClash : https://${domain}:81/trojan-$user.txt"
 lane
 echo -e " $y  Expired On : ${timer}" 
 lane
-echo "killtrial trojan ${user}" | at now +${timer}m
 Credit_Sc
