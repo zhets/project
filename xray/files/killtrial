@@ -1,16 +1,13 @@
 #!/bin/bash
 
 user="$2"
-timer="$3"
 function ssh(){
-    sleep ${timer}m
 	getent passwd ${user}  >/dev/null 2>&1
 	userdel -f ${user}  >/dev/null 2>&1
 	systemctl restart sshd >/dev/null 2>&1
 	systemctl restart ws >/dev/null 2>&1
 }
 function vmess(){
-    sleep ${timer}m
     exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 	sed -i "/^### $user $exp/,/^},{/d" /etc/vmess/.vmess.db
 	sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
@@ -26,7 +23,6 @@ function vmess(){
         rm -f /var/www/html/vmess-$user.txt
 }
 function vless(){
-    sleep ${timer}m
     exp=$(grep -wE "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 	sed -i "/^#& $user $exp/,/^},{/d" /etc/vless/.vless.db
 	sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
@@ -42,7 +38,6 @@ function vless(){
         rm -f /var/www/html/vless-$user.txt
 }
 function trojan(){
-    sleep ${timer}m
     exp=$(grep -wE "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 	sed -i "/^#! $user $exp/,/^},{/d" /etc/trojan/.trojan.db
 	sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/config.json
@@ -57,7 +52,6 @@ function trojan(){
         rm -f /var/www/html/trojan-$user.txt
 }
 function ssws(){
-    sleep ${timer}m
     exp=$(grep -wE "^##@ $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 	sed -i "/^##@ $user $exp/,/^},{/d" /etc/shadowsocks/.shadowsocks.db
 	sed -i "/^##@ $user $exp/,/^},{/d" /etc/xray/config.json
