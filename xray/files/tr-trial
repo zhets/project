@@ -43,7 +43,7 @@ echo -e ""
 read -rp " Input number Minutes : " -e timer
 
 
-user=`</dev/urandom tr -dc X-Z0-9 | head -c5`
+user=`</dev/urandom tr -dc a-z0-9 | head -c6`
 iplimit=5
 Quota=1
 masaaktif 1
