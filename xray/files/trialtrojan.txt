@@ -33,34 +33,21 @@ echo -e ""
 }
 
 clear
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 lane
 echo -e "${ungu}          CREATE TROJAN ACCOUNT          ${NC}"
 lane
-echo -e "${ungu}     Setup Limit Quota/IP for Account${NC}"
-echo -e "${ungu}     0 For Unlimited/No Limit${NC}"
+echo -e "${ungu}     Setup 1m for 1 minutes ${NC}"
+echo -e "${ungu}     Setup 1h for 1 hour ${NC}"
 echo -e ""
 echo -e ""
-read -rp " Input Username : " -e user
-user_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+read -rp " Input number Minutes : " -e timer
 
-if [[ ${user_EXISTS} == '1' ]]; then
-clear
-lane
-echo -e "${ungu}         CREATE TROJAN ACCOUNT          ${NC}"
-lane
-echo ""
-echo "A client with the specified name was already created, please choose another name."
-echo ""
-lane
-read -n 1 -s -r -p "Press any key to back on menu"
-m-trojan
-fi
-done
+
+user=`</dev/urandom tr -dc X-Z0-9 | head -c5`
+iplimit=5
+Quota=1
+masaaktif 1
 uuid=$(cat /proc/sys/kernel/random/uuid)
-read -p " Expired (days)  : " masaaktif
-read -p " Limit User (IP) : " iplimit
-read -p " Limit Quota (GB): " Quota
 tgl=$(date -d "$masaaktif days" +"%d")
 bln=$(date -d "$masaaktif days" +"%b")
 thn=$(date -d "$masaaktif days" +"%Y")
@@ -158,6 +145,12 @@ systemctl reload nginx
 service cron restart
 systemctl restart xray
 
+cat> /etc/cron.d/trial-trojan${user} << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/$timer * * * * root /usr/bin/trial trojan $user $uuid $exp
+
+END
 LOGO
 echo -e "${ungu}             TROJAN ACCOUNT              ${NC}"
 lane
@@ -179,7 +172,6 @@ echo -e " Link GRPC        : ${trojanlink1}"
 lane
 echo -e " Format OpenClash : https://${domain}:81/trojan-$user.txt"
 lane
-echo -e " $y  Created On : $tnggl"
-echo -e " $y  Expired On : $expe" 
+echo -e " $y  Expired On : $timer" 
 lane
 Credit_Sc
