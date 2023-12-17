@@ -140,17 +140,19 @@ if [[ "${DATADB}" != '' ]]; then
   sed -i "/\b${user}\b/d" /etc/trojan/.trojan.db
 fi
 echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit}" >>/etc/trojan/.trojan.db
+
+cat> /etc/cron.d/trial-trojan${user} << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/$timer * * * * root /usr/bin/killtrial trojan $user $uuid $exp
+
+END
+
 systemctl reload xray
 systemctl reload nginx
 service cron restart
 systemctl restart xray
 
-cat> /etc/cron.d/trial-trojan${user} << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/$timer * * * * root /usr/bin/trial trojan $user $uuid $exp
-
-END
 LOGO
 echo -e "${ungu}             TROJAN ACCOUNT              ${NC}"
 lane
