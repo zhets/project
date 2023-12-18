@@ -34,10 +34,12 @@ res1() {
     unzip menu.zip
     chmod +x menu/*
     mv menu/* /usr/local/sbin
-    wget https://raw.githubusercontent.com/zhets/project/main/ssh/udp.sh && chmod +x udp.sh && ./udp.sh
-    rm -rf menu
-    rm -rf menu.zip
-    rm -rf update.sh
+    wget https://raw.githubusercontent.com/zhets/project/main/ssh/udp-custom.sh && chmod +x udp-custom.sh
+    bash udp-custom.sh
+    rm -fr udp-custom.sh
+    rm -fr menu
+    rm -fr menu.zip
+    rm -fr update.sh
 }
 netfilter-persistent
 clear
