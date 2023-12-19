@@ -33,10 +33,9 @@ res1() {
     wget https://raw.githubusercontent.com/zhets/project/main/menu/menu.zip
     unzip menu.zip
     chmod +x menu/*
+    mv menu/z9dtrial /usr/bin/z9dtrial
+    chmod +x /usr/bin/z9dtrial
     mv menu/* /usr/local/sbin
-    wget https://raw.githubusercontent.com/zhets/project/main/ssh/udp-custom.sh && chmod +x udp-custom.sh
-    bash udp-custom.sh
-    rm -fr udp-custom.sh
     rm -fr menu
     rm -fr menu.zip
     rm -fr update.sh
@@ -44,7 +43,7 @@ res1() {
 netfilter-persistent
 clear
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \e[1;97;101m          UPDATE SCRIPT                 \e[0m"
+echo -e " \e[1;97;101m             UPDATE SCRIPT              \e[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
 echo -e "  \033[1;91m update script service\033[1;37m"
