@@ -15,7 +15,7 @@ TEXT="
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
-mulog=$(cekssh)
+mulog=$(fvssh)
 date=$(date)
 data=( `ls /etc/xray/limit/ssh/ip`);
 for user in "${data[@]}"
