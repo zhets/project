@@ -1,8 +1,5 @@
 #!/bin/bash
 REPO="https://raw.githubusercontent.com/zhets/project/main/"
-
-echo -e "Install Limit Quota Service"
-sleep 2
 wget -q -O /etc/xray/limit.vmess "${REPO}limit/vmess" >/dev/null 2>&1
 wget -q -O /etc/xray/limit.vless "${REPO}limit/vless" >/dev/null 2>&1
 wget -q -O /etc/xray/limit.trojan "${REPO}limit/trojan" >/dev/null 2>&1
@@ -82,8 +79,6 @@ systemctl enable --now limitvless
 systemctl enable --now limittrojan
 systemctl enable --now limitshadowsocks
 
-echo -e "Install Limit Ip Service"
-sleep 2
 cd
 wget -q -O /usr/local/bin/limit-ip-ssh "${REPO}limit/limit-ip-ssh"
 chmod +x /usr/local/bin/*
@@ -152,7 +147,7 @@ ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
-ExecStart=/usr/local/sbin/limit-ip-ssh
+ExecStart=/usr/local/bin/limit-ip-ssh
 Restart=always
 
 [Install]
