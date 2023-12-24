@@ -1,4 +1,4 @@
-### ORDER AUTOSCRIPT/IZIN IP
+### ORDER AUTOSCRIPT TUNNELING
 <p align="center">  
   <img src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&center=true&vCenter=true&lines=Welcome%20To%20My%20Hosting" />  
 </p>
@@ -7,11 +7,10 @@
 - PRICELIST
 ```
 HARGA SEWA AUTOSCRIPT 
-1 Bulan : 10K
+1 Bulan : 15k
 2 Bulan : 20K
-3 Bulan : 30K
-LIFETIME: 75K
-Source : 600K Nego
+LIFETIME: 35K
+Source : 400K Nego
 ```
 • HUBUNGI:
 - WhatsApp: [Klik Disini](https://wa.me/6285935195701)
@@ -19,9 +18,9 @@ Source : 600K Nego
 - Channel: [Klik Disini](https://t.me/xdxl_vpn)
 - My Group: [Klik Disini](https://xdxl_grup)
 
-### PERHATIAN
-- Jika mendapatkan error pada servis dalam jangka panjang, bisa restart servis yang dead.
-
+### WARNING
+- Jika mendapatkan error pada servis dalam jangka panjang
+- bisa restart service.
 
 ### TESTED ON OS 
 - UBUNTU 20.04.05
@@ -29,8 +28,11 @@ Source : 600K Nego
 
 ### FITUR TAMBAHAN
 ```
-- Atur Limit Quota Per Akun
-- Atur Limit IP Per Akun
+- Atur Limit Quota Per Account
+- Atur Limit IP Per Account
+- User details Account
+- Edit Limit IP Account
+- Edit User Quota Account
 - SlowDNS & SSH UDP
 - OpenVpn
 - Penambahan fail2ban
