@@ -1,0 +1,119 @@
+#!/bin/bash
+# // COLOR VARIATION
+p="\e[1;97m"
+g="\033[1;92m"
+y='\033[1;93m'
+z="\033[96m"
+j="\033[93m"
+w="\033[1;92m"
+r="\033[1;31m"
+a=" ${z}ACCOUNT" 
+q="\e[1;92;41m"
+Blue="\033[0;34m"
+NC='\033[0m'
+function garis_atas() {
+echo -e " ${z}╭────────────────────────────────────────────────────╮${NC}"
+}
+function garis_bawah() {
+echo -e " ${z}╰────────────────────────────────────────────────────╯${NC}"
+}
+ISP=$(cat /root/.isp)
+CITY=$(cat /root/.city)
+domain=$(cat /etc/xray/domain)
+RAM=$(free -m | awk 'NR==2 {print $2}')
+MODEL=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')
+CORE=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
+DATEVPS=$(date +'%d-%m-%Y')
+TIMEZONE=$(printf '%(%H-%M-%S)T')
+SERONLINE=$(uptime -p | cut -d " " -f 2-10000)
+MYIP=$(curl -sS ipv4.icanhazip.com)
+url_izin="https://raw.githubusercontent.com/zhets/izinsc/main/ip"
+username=$(curl -sS $url_izin | grep $MYIP | awk '{print $2}')
+exp=$(curl -sS $url_izin | grep $MYIP | awk '{print $3}')
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$today" +%s)
+certifacate=$(((d1 - d2) / 86400))
+DATE=$(date +'%Y-%m-%d')
+datediff() {
+    d1=$(date -d "$1" +%s)
+    d2=$(date -d "$2" +%s)
+    echo -e "$COLOR1 $NC Expiry In   : $(( (d1 - d2) / 86400 )) Days"
+}
+mai="datediff "$Exp" "$DATE""
+Info="(${green}Active${NC})"
+Error="(${RED}Expired${NC})"
+today=`date -d "0 days" +"%Y-%m-%d"`
+Exp1=$(curl -sS $url_izin | grep $MYIP | awk '{print $3}')
+if [[ $today < $Exp1 ]]; then
+sts="${Info}"
+else
+sts="${Error}"
+fi
+ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+xray_service=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+nginx_service=$(systemctl status nginx | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+if [[ $ssh_service == "running" ]]; then 
+   status_ssh="${g}ON✓${NC}"
+else
+   status_ssh="${r}OFF${NC}"
+fi
+if [[ $xray_service == "running" ]]; then 
+   status_xray="${g}ON✓${NC}"
+else
+   status_xray="${r}OFF${NC}"
+fi
+if [[ $nginx_service == "running" ]]; then 
+   status_nginx="${g}ON✓${NC}"
+else
+   status_nginx="${r}OFF${NC}"
+fi
+vlx=$(grep -c -E "^#& " "/etc/xray/config.json")
+let vla=$vlx/2
+vmc=$(grep -c -E "^### " "/etc/xray/config.json")
+let vma=$vmc/2
+ssh1="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
+trx=$(grep -c -E "^#! " "/etc/xray/config.json")
+let trb=$trx/2
+ssx=$(grep -c -E "^#ss# " "/etc/xray/config.json")
+let ssa=$ssx/2
+KANAN="\033[1;32m<\033[1;33m<\033[1;31m<\033[1;31m$NC"
+KIRI="\033[1;32m>\033[1;33m>\033[1;31m>\033[1;31m$NC"
+scw="${z}│$NC$z • $NC${r}"
+ksk="               ${z}"
+fdlylope="     ${z}│$NC "
+sama="${y}=$NC"
+clear
+garis_atas
+echo -e " ${z}│$NC $q            AutoScript By XDXL STORE              ${NC}${z} │$NC"
+garis_bawah
+garis_atas
+echo -e " ${scw}ISP    ${sama} $ISP${NC}"
+echo -e " ${scw}CITY   ${sama} $CITY${NC}"
+echo -e " ${scw}OS     ${sama} $MODEL${NC}"
+echo -e " ${scw}CORE   ${sama} $CORE${NC}"
+echo -e " ${scw}RAM    ${sama} $RAM MB $NC"
+echo -e " ${scw}UPTIME ${sama} $SERONLINE${NC}"
+echo -e " ${scw}DOMAIN ${y}=$z $domain${NC}"
+echo -e " ${scw}IP     ${y}=$z $MYIP${NC}"
+garis_bawah
+garis_atas
+echo -e " ${z}│${Blue} SSH-WS$NC : $status_ssh ${z}│$Blue NGINX$NC : $status_nginx ${z}│$Blue XRAY$NC : $status_xray ${z}│$Blue   DONE   ${z}│$NC" 
+garis_bawah
+echo -e "       ╭─────────────────────────────────────────╮" | lolcat
+echo -e "                    ${g} TOTAL ACCOUNTS ${NC}"
+echo -e ""
+echo -e "${ksk}SSH/OVPN$NC    ${sama}$r $ssh1$NC $a"
+echo -e "${ksk}VMESS$NC       ${sama}$r $vma$NC $a"
+echo -e "${ksk}VLESS$NC       ${sama}$r $vla$NC $a"
+echo -e "${ksk}TROJAN$NC      ${sama}$r $trb$NC $a"
+echo -e "${ksk}SHADOWSOCK$NC  ${sama}$r $ssa$NC $a"
+echo -e "       ╰─────────────────────────────────────────╯" | lolcat
+echo -e "     ${z}╭─────────────────────────────────────────────╮${NC}"
+echo -e "${fdlylope}Version       ${y}= $g V.2.1${NC}"
+echo -e "${fdlylope}User          ${y}= $g $username \e[0m"
+echo -e "${fdlylope}Script Status ${sama}  $sts \e[0m"
+echo -e "${fdlylope}Expired       ${sama}  $exp ( ${w}$certifacate${NC} Days ) $NC"
+echo -e "     ${z}╰─────────────────────────────────────────────╯${NC}"
+echo -e ""
+echo -e "         To access use ${KIRI} $w menu  ${NC}${KANAN} command"
+echo ""
