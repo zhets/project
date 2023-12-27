@@ -1,0 +1,241 @@
+#!/bin/bash
+y="\033[1;93m"
+g="\033[1;92m"
+Green="\e[92;1m"
+z='\e[36m'
+r="\033[1;91m"
+ungu='\033[0;35m'
+NC="\033[0m"
+red() { echo -e "\\033[32;1m${*}\\033[0m"; }
+url_izin="https://raw.githubusercontent.com/zhets/izinsc/main/ip"
+ipsaya=$(curl -sS ipv4.icanhazip.com)
+data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+date_list=$(date +"%Y-%m-%d" -d "$data_server")
+checking_sc() {
+  useexp=$(wget -qO- $url_izin | grep $ipsaya | awk '{print $3}')
+  if [[ $date_list < $useexp ]]; then
+    echo -ne
+  else
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e "\033[42m          404 NOT FOUND AUTOSCRIPT          \033[0m"
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e ""
+    echo -e "            ${RED}PERMISSION DENIED !${NC}"
+    echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
+    echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
+    echo -e "             \033[0;33mContact Admin :${NC}"
+    echo -e "      \033[0;36mWhatsapp${NC} wa.me/6285935195701"
+    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    exit
+  fi
+}
+checking_sc
+domain=$(cat /etc/xray/domain)
+function loadingsc() {
+echo -e ""
+echo -e " Creating user...."
+echo -ne "Please wait... "
+load
+systemctl restart xray > /dev/null 2>&1
+service cron restart > /dev/null 2>&1
+}
+function garis() {
+echo -e "${y} ────────────────────────────────────────────${NC}"
+}
+function Credit_Sc() {
+sleep 1
+echo -e ""
+garis 
+echo -e "${ungu}      Terimakasih sudah menggunakan-"
+echo -e "        Script premium by Xdxl vpn"
+garis
+echo -e ""
+exit 0
+}
+
+clear
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+  echo -e "${y}───────────────────\033[0m"
+  echo -e " CREATE VLESS ACCOUNT           "
+  echo -e "${y}───────────────────\033[0m"
+
+  read -rp "User: " -e user
+  CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+
+  if [[ ${CLIENT_EXISTS} == '1' ]]; then
+    clear
+  echo -e "${y}───────────────────\033[0m"
+  echo -e " CREATE VLESS ACCOUNT           "
+  echo -e "${y}───────────────────\033[0m"
+    echo ""
+    echo "A client with the specified name was already created, please choose another name."
+    echo ""
+    echo -e "\033[0;34m───────────────────\033[0m"
+    read -n 1 -s -r -p "Press any key to back on menu"
+    menu
+  fi
+done
+
+clear
+garis
+echo -e "${ungu}          INPUT DEPENDECIES ACCOUNT        ${NC}"
+garis
+echo -e "${ungu}   Setup Limit Quota/IP for Account"
+echo -e "${ungu}       0 For Unlimited/No Limit ${NC}"
+echo -e ""
+echo -e ""
+echo -e " Username      :${r} $user ${NC}"
+echo -e ""
+read -p " User Quota GB  : " Quota
+read -p " Limit user IP  : " iplimit
+read -p " Expired (days) : " masaaktif
+uuid=$(cat /proc/sys/kernel/random/uuid)
+tgl=$(date -d "$masaaktif days" +"%d")
+bln=$(date -d "$masaaktif days" +"%b")
+thn=$(date -d "$masaaktif days" +"%Y")
+expe="$tgl $bln, $thn"
+tgl2=$(date +"%d")
+bln2=$(date +"%b")
+thn2=$(date +"%Y")
+tnggl="$tgl2 $bln2, $thn2"
+hariini=$(date -d "0 days" +"%Y-%m-%d")
+exp=$(date -d "$masaaktif days" +"%Y-%m-%d")
+sed -i '/#vless$/a\#& '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#vlessgrpc$/a\#& '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+
+if [ ! -e /etc/xray/limit/vless/quota ]; then
+  mkdir -p /etc/xray/limit/vless/quota
+fi
+
+if [[ $iplimit -gt 0 ]]; then
+mkdir -p /etc/xray/limit/vless/ip
+echo -e "$iplimit" > /etc/xray/limit/vless/ip/$user
+else
+echo > /dev/null
+fi
+
+if [ -z ${Quota} ]; then
+  Quota="0"
+fi
+
+c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
+d=$((${c} * 1024 * 1024 * 1024))
+
+if [[ ${c} != "0" ]]; then
+  echo "${d}" >/etc/xray/limit/vless/quota/${user}
+fi
+DATADB=$(cat /etc/vless/.vless.db | grep "^###" | grep -w "${user}" | awk '{print $2}')
+if [[ "${DATADB}" != '' ]]; then
+  sed -i "/\b${user}\b/d" /etc/vless/.vless.db
+fi
+echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit} ${hariini}" >>/etc/vless/.vless.db
+
+cat >/var/www/html/vless-$user.txt <<-END
+
+───────────────────
+    Format For Clash
+───────────────────
+# Format Vless WS TLS
+
+- name: Vless-$user-WS TLS
+  server: ${domain}
+  port: 443
+  type: vless
+  uuid: ${uuid}
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  servername: ${domain}
+  network: ws
+  ws-opts:
+    path: /xdxl-vpn
+    headers:
+      Host: ${domain}
+
+# Format Vless WS Non TLS
+
+- name: Vless-$user-WS (CDN) Non TLS
+  server: ${domain}
+  port: 80
+  type: vless
+  uuid: ${uuid}
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  servername: none
+  network: ws
+  ws-opts:
+    path: /xdxl-vpn
+    headers:
+      Host: ${domain}
+  udp: true
+
+# Format Vless gRPC (SNI)
+
+- name: Vless-$user-gRPC (SNI)
+  server: ${domain}
+  port: 443
+  type: vless
+  uuid: ${uuid}
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  servername: ${domain}
+  network: grpc
+  grpc-opts:
+  grpc-mode: gun
+    grpc-service-name: vless-grpc
+
+───────────────────
+Link Akun Vless 
+───────────────────
+Link TLS      : 
+${vlesslink1}
+───────────────────
+Link none TLS : 
+${vlesslink2}
+───────────────────
+Link GRPC     : 
+${vlesslink3}
+───────────────────
+
+END
+
+vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=${domain}#${user}"
+
+vlesslink1="vless://${uuid}@${domain}:80?path=/xdxl-vpn&encryption=none&host=${domain}&type=ws#${user}"
+
+vlesslink2="vless://${uuid}@${domain}:443?path=/xdxl-vpn&security=tls&encryption=none&host=${domain}&type=ws&sni=${domain}#${user}"
+
+loadingsc
+
+clear
+garis
+echo -e " ${ungu}              VLESS ACCOUNT              ${NC}"
+garis
+echo -e " Username     : ${user}"
+echo -e " Domain       : ${domain}"
+echo -e " User Quota   : ${Quota} GB"
+echo -e " User IP      : ${iplimit} Device"
+echo -e " User ID      : ${uuid}"
+echo -e " Encryption   : none"
+echo -e " Path Dynamic : https://bug.com/xdxl-vpn"
+echo -e " Path         : /xdxl-vpn"
+echo -e " ServiceName  : vless-grpc"
+echo -e " Port WS TLS  : 443, 8443, 2053"
+echo -e " Port WS NTLS : 80, 8080, 8880, 2052, 2082"
+garis
+echo -e " Link WS TLS  : ${vlesslink1}"
+garis
+echo -e " Link WS NTLS : ${vlesslink2}"
+garis
+echo -e " Link GRPC    : ${vlesslink3}"
+garis
+echo -e " Format For Clash: https://${domain}:81/vless-$user.txt"
+garis
+echo -e " Created On       : $tnggl"
+echo -e " Expired On       : $expe"
+garis
+Credit_Sc
