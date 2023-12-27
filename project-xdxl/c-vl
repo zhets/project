@@ -89,7 +89,8 @@ echo -e ""
 read -p " User Quota GB  : " Quota
 read -p " Limit user IP  : " iplimit
 read -p " Expired (days) : " masaaktif
-uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p " Input UUID     : " uuid
+#uuid=$(cat /proc/sys/kernel/random/uuid)
 tgl=$(date -d "$masaaktif days" +"%d")
 bln=$(date -d "$masaaktif days" +"%b")
 thn=$(date -d "$masaaktif days" +"%Y")
