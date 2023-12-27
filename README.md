@@ -3,14 +3,14 @@
   <img src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&center=true&vCenter=true&lines=Welcome%20To%20My%20Github" />  
 </p>
 
-![xdxlVPN card name](https://cardivo.vercel.app/api?name=xdxlVPN&description=Hi,%20everyone!%20and%20Nice%20to%20meet%20you%20%F0%9F%91%8B&image=https://github.com/pusoxx/ver3/raw/main/1686655025212.png?v=4&backgroundColor=%23ecf0f1&telegram=/&github=xdxlVPN&pattern=leaf&colorPattern=%23eaeaea)
+![XDXL-STORE card name](https://cardivo.vercel.app/api?name=XDXL-STORE&description=Hi,%20everyone!%20and%20Nice%20to%20meet%20you%20%F0%9F%91%8B&image=https://github.com/pusoxx/ver3/raw/main/1686655025212.png?v=4&backgroundColor=%23ecf0f1&telegram=/&github=xdxlVPN&pattern=leaf&colorPattern=%23eaeaea)
 - PRICELIST
 ```
 HARGA SEWA AUTOSCRIPT 
 1 Bulan : 15k
 2 Bulan : 20K
 LIFETIME: 35K
-Source : 400K Nego
+Source : 250K Nego
 ```
 • HUBUNGI:
 - WhatsApp: [Klik Disini](https://wa.me/6285935195701)
