@@ -1,0 +1,36 @@
+#!/bin/bash
+# // simple create ssh account
+# // sc by zheevpn X xdxl stores
+z="\033[0;35m"
+x="\033[0m"
+g="\033[1;92m"
+clear
+Domain=$(cat /etc/xray/domain)"
+IP=$(curl -sS ipv4.icanhazip.com)
+echo -e "${z}=========================================${x}"
+echo -e " ${g}       Create SSH Account         ${x}"
+echo -e "${z}=========================================${x}"
+read -p "Username       : " userssh
+read -p "Password       : " Pass
+read -p "Expired (Days) : " expired
+useradd -e `date -d "$expired days" +"%Y-%m-%d"` -s /bin/false -M $userssh
+exp="$(chage -l $userssh | grep "Account expires" | awk -F": " '{print $2}')"
+echo -e "$Pass\n$Pass\n"|passwd $userssh &> /dev/null
+clear
+echo -e "${z}===========================${x}"                 
+echo -e "   <=  SSH ACCOUNT =>"       
+echo -e "${z}===========================${x}"
+echo -e "Username       : $userssh"
+echo -e "Password       : $Pass"        
+echo -e "Host           : ${Domain}"
+echo -e "IP             : ${IP}
+echo -r "Port OpenSSH   : 22"
+echo -e "Port SSL/TLS   : 443"
+echo -e "Port none TLS  : 80"
+echo -e "Port Udgpw SSH : 7300"      
+echo -e "${z}===========================${x}"
+echo -e "Payload WS  => "
+echo -e "GET http://bug.com/ HTTP/1.1[crlf]Host: ${Domain}[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "${z}===========================${x}"
+echo -e "Expired On : $exp"
+echo -e "${z}===========================${x}"
