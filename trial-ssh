@@ -1,0 +1,33 @@
+#!/bin/bash
+# // simple trial ssh account
+# // sc by zheevpn X xdxl stores
+z="\033[0;35m"
+x="\033[0m"
+g="\033[1;92m"
+Domain=$(cat /etc/xray/domain)"
+IP=$(curl -sS ipv4.icanhazip.com)
+userssh=trial`</dev/urandom tr -dc 0-9 | head -c5`
+Pass=1
+expired=1
+useradd -e `date -d "$expired days" +"%Y-%m-%d"` -s /bin/false -M $userssh
+exp="$(chage -l $userssh | grep "Account expires" | awk -F": " '{print $2}')"
+echo -e "$Pass\n$Pass\n"|passwd $userssh &> /dev/null
+clear
+echo -e "${z}===========================${x}"                 
+echo -e "   <=  SSH ACCOUNT =>"       
+echo -e "${z}===========================${x}"
+echo -e "Username       : $userssh"
+echo -e "Password       : $Pass"        
+echo -e "Host           : ${Domain}"
+echo -e "IP             : ${IP}
+echo -r "Port OpenSSH   : 22"
+echo -e "Port SSL/TLS   : 443"
+echo -e "Port none TLS  : 80"
+echo -e "Port Udgpw SSH : 7300"      
+echo -e "${z}===========================${x}"
+echo -e "Payload WS  => "
+echo -e "GET http://bug.com/ HTTP/1.1[crlf]Host: ${Domain}[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "${z}===========================${x}"
+echo -e "Expired On : $exp"
+echo -e "${z}===========================${x}"
+￼
