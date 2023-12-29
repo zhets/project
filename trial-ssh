@@ -1,11 +1,15 @@
 #!/bin/bash
-# // simple trial ssh account
+# // simple trial ssh account ( minutes )
 # // sc by zheevpn X xdxl stores
+# // trial ssh menggunakan expired menit ini hanya berjalan di OS Ubuntu !
+# // Untuk debian blm tersedia
+# / COLOR VALIDATION | Zhee PROJECT
 z="\033[0;35m"
 x="\033[0m"
 g="\033[1;92m"
 Domain=$(cat /etc/xray/domain)"
 IP=$(curl -sS ipv4.icanhazip.com)
+read -p " Sett Exp ( Minutes ) : " timer
 userssh=trial`</dev/urandom tr -dc 0-9 | head -c5`
 Pass=1
 expired=1
@@ -13,6 +17,7 @@ useradd -e `date -d "$expired days" +"%Y-%m-%d"` -s /bin/false -M $userssh
 exp="$(chage -l $userssh | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $userssh &> /dev/null
 clear
+echo userdel -f $user | at now +${timer} minutes
 echo -e "${z}===========================${x}"                 
 echo -e "   <=  SSH ACCOUNT =>"       
 echo -e "${z}===========================${x}"
@@ -30,4 +35,4 @@ echo -e "GET http://bug.com/ HTTP/1.1[crlf]Host: ${Domain}[crlf]Upgrade: websock
 echo -e "${z}===========================${x}"
 echo -e "Expired On : $exp"
 echo -e "${z}===========================${x}"
-￼
+
