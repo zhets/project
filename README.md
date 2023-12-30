@@ -18,11 +18,13 @@ Source : 250K Nego
 - My Group: [Klik Disini](https://xdxl_grup)
 
 ### WARNING
+```
 - Jika mendapatkan error pada servis dalam jangka panjang
 - bisa restart service.
+```
 
 ### FEATURE SCRIPT
-
+```
 - ⚡ XDXL Autoscript ⚡
 - ⛈️ Fitur :
 - ✅Bot Telegram (Create / Trial / Check / Backup)
@@ -38,20 +40,17 @@ Source : 250K Nego
 - ✅User details Account
 - ✅Edit Limit IP Account
 - ✅Edit User Quota Account
+```
 
 # Required
-- Free DOMAIN
+```
+- Free DOMAIN By Request
 - DEBIAN 9/10
 - Ubuntu 18/20 (rekomendasi Ubuntu 20.04) 
 - CPU MINIMAL 1 CORE
 - RAM 1GB
+```
 
-</p> 
-<h2 align="center"> Supported Linux Distribution</h2>
-<p align="center"><img src="https://d33wubrfki0l68.cloudfront.net/5911c43be3b1da526ed609e9c55783d9d0f6b066/9858b/assets/img/debian-ubuntu-hover.png"></p> 
-<p align="center"><img src="https://img.shields.io/static/v1?style=for-the-badge&logo=debian&label=Debian%209&message=Stretch&color=purple"> <img src="https://img.shields.io/static/v1?style=for-the-badge&logo=debian&label=Debian%2010&message=Buster&color=purple">  <img src="https://img.shields.io/static/v1?style=for-the-badge&logo=ubuntu&label=Ubuntu%2018&message=Lts&color=red"> <img src="https://img.shields.io/static/v1?style=for-the-badge&logo=ubuntu&label=Ubuntu%2020&message=Lts&color=red">
-</p>
-</div>
 UPDATE DULU SEBELUM INSTALL..!! 
 
 # UPDATE UNTUK DEBIAN
@@ -84,9 +83,9 @@ chat me..!!
 - SSH UDP 1-65535
 - OVPN SSL/TCP 1194
 - SLOWDNS 5300
-- ALL PORT HTTP:
+- ALL PORT FOR nTLS:
 - 80, 8080, 8880, 8280, 2052, 2082, 2086, 2095
-- ALL PORT HTTPS:
+- ALL PORT FOR TLS:
 - 443, 2053, 2083, 2087, 2096, 8443
 ```
 
