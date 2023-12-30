@@ -46,7 +46,7 @@ Source : 250K Nego
 ```
 - Free DOMAIN By Request
 - DEBIAN 9/10
-- Ubuntu 18/20 (rekomendasi Ubuntu 20.04) 
+- Ubuntu 18/20 (rekomendasi Debian 10) 
 - CPU MINIMAL 1 CORE
 - RAM 1GB
 ```
@@ -100,9 +100,7 @@ chat me..!!
 ```
 
 ### FEATURE SCRIPT IMAGE
-![vmess]( )
-![system]( )
-![bandwith]( )
-![trial]( )
-![ssh]( )
-![menu]( )
+![vmess](https://github.com/zhets/project/raw/main/images/vmess.jpg)
+![setting](https://github.com/zhets/project/raw/main/images/settingg.jpg)
+![sshws](https://github.com/zhets/project/raw/main/images/sshws.jpg)
+![menu](https://github.com/zhets/project/raw/main/images/menuu.jpg)
