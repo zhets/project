@@ -90,7 +90,7 @@
        "streamSettings":{
            "network": "ws",
            "wsSettings": {
-               "path": "/trojan-ws"
+               "path": "/trojan"
             }
          }
      },
@@ -131,7 +131,7 @@
           "streamSettings":{
              "network": "grpc",
              "grpcSettings": {
-                "serviceName": "vless-grpc"
+                "serviceName": "vless"
            }
         }
      },
@@ -151,7 +151,7 @@
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
-                "serviceName": "vmess-grpc"
+                "serviceName": "vmess"
           }
         }
      },
@@ -171,7 +171,7 @@
          "streamSettings":{
          "network": "grpc",
            "grpcSettings": {
-               "serviceName": "trojan-grpc"
+               "serviceName": "trojan"
          }
       }
    },
