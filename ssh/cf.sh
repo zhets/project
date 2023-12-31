@@ -3,7 +3,7 @@
 # Auther  : FV STORE
 # (C) Copyright 2023
 # =========================================
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(curl -sS ipv4.icanhazip.com)
 clear
 apt install jq curl -y >/dev/null 2>&1
 read -rp "Sub Domain (Contoh: fv12): " -e sub
@@ -12,7 +12,7 @@ SUB_DOMAIN=${sub}.vpn-prem.biz.id
 CF_ID=padliapandi459@gmail.com
 CF_KEY=1a700ef4a22e642f0ea8d43420bb0b1237589
 set -euo pipefail
-IP=$(wget -qO- ifconfig.me/ip);
+IP=$(curl -sS ipv4.icanhazip.com);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
