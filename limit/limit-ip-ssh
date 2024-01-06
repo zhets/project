@@ -27,9 +27,7 @@ egrep "^$user" /etc/passwd >/dev/null
 passwd -l $user
 systemctl restart ws
 send_log
-sleep 900
-egrep "^$user" /etc/passwd >/dev/null
-passwd -u $user
+echo "passwd -u $user" | at now + 15 minutes > /dev/null
 else
 echo > /dev/null
 fi
