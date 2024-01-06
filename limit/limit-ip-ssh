@@ -28,6 +28,7 @@ passwd -l $user
 systemctl restart ws
 send_log
 echo "passwd -u $user" | at now + 15 minutes > /dev/null
+systemctl restart ws
 else
 echo > /dev/null
 fi
