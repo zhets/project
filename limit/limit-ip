@@ -1,17 +1,18 @@
 #!/bin/bash
 
 function send_log(){
+protocol="$1"
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
 KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
 TIME="10"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 TEXT="
 <code>────────────────────</code>
-<b>  ⚠️ NOTIF MULTI LOGIN XRAY ⚠️</b>
+<b>  ⚠️ NOTIF MULTI LOGIN $protocol ⚠️</b>
 <code>────────────────────</code>
 <code>Username : </code><code>$user</code>
-<code>Login IP : </code><code>$cekcek</code>
-<code>Limit IP : </code><code>$iplimit</code>
+<code>Limit IP : </code><code>$iplimit Device</code>
+<code>Login IP : </code><code>$cekcek Device</code>
 <code>────────────────────</code>
 <code>Account Locked selama 15 menit</code>
 <code>────────────────────</code>
@@ -23,7 +24,6 @@ function vmip(){
 echo -n > /var/log/xray/access.log
 sleep 4
 data=( `ls /etc/xray/limit/vmess/ip`);
-#Decrypted By YADDY D PHREAKER
     for user in "${data[@]}"
     do
         iplimit=$(cat /etc/xray/limit/vmess/ip/$user)
@@ -34,7 +34,7 @@ data=( `ls /etc/xray/limit/vmess/ip`);
                   sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
                   systemctl restart xray >> /dev/null 2>&1
                   jum2=$(cat /tmp/ipvmess.txt | wc -l )
-                  send_log
+                  send_log VMESS
                   echo "unlock_xray unlock-vmess $user" | at now + 15 minutes > /dev/null
                   systemctl restart xray
                   else
@@ -48,7 +48,6 @@ function vlip(){
 echo -n > /var/log/xray/access.log
 sleep 4
 data=( `ls /etc/xray/limit/vless/ip`);
-#Decrypted By YADDY D PHREAKER
     for user in "${data[@]}"
     do
         iplimit=$(cat /etc/xray/limit/vless/ip/$user)
@@ -59,7 +58,7 @@ data=( `ls /etc/xray/limit/vless/ip`);
                   sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
                   systemctl restart xray >> /dev/null 2>&1
                   jum2=$(cat /tmp/ipvless.txt | wc -l)
-                  send_log
+                  send_log VLESS
                   echo "unlock_xray unlock-vless $user" | at now + 15 minutes > /dev/null
                   systemctl restart xray
                 else
@@ -73,7 +72,6 @@ function trip(){
 echo -n > /var/log/xray/access.log
 sleep 4
 data=( `ls /etc/xray/limit/trojan/ip`);
-#Decrypted By YADDY D PHREAKER
     for user in "${data[@]}"
     do
         iplimit=$(cat /etc/xray/limit/trojan/ip/$user)
@@ -85,8 +83,7 @@ data=( `ls /etc/xray/limit/trojan/ip`);
                   systemctl restart xray >> /dev/null 2>&1
                   jum2=$(cat /tmp/iptrojan.txt | wc -l)
                   echo "unlock_xray unlock-trojan $user" | at now + 15 minutes > /dev/null
-                  systemctl restart xray
-                  send_log
+                  send_log TROJAN
                 else
             echo ""
         fi
